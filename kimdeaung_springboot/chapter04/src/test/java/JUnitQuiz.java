@@ -46,6 +46,10 @@ public class JUnitQuiz {
         assertThat(number1).isGreaterThan(number2);
         //number3가 number2 보다 작은지 확인
         assertThat(number3).isLessThan(number2);
+
+        //test/java -> JUnitCycleQuiz.java
     }
+
+
 
 }

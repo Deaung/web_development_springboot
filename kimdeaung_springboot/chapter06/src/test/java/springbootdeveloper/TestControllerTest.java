@@ -1,4 +1,4 @@
-package me.kimdeaung.springbootdeveloper;
+package springbootdeveloper;
 /*
     test 클래스 생성방법
 
@@ -8,6 +8,9 @@ package me.kimdeaung.springbootdeveloper;
     4. create test 선택
     5. 현재 프로젝트 상으로 JUnit5 로 고정
  */
+
+import me.kimdeaung.springbootdeveloper.Member;
+import me.kimdeaung.springbootdeveloper.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,10 +24,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc // MockMvc 생성 및 자동 구성
