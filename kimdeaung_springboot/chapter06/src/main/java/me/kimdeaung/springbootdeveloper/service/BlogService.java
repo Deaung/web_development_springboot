@@ -6,6 +6,8 @@ import me.kimdeaung.springbootdeveloper.dto.AddArticleRequest;
 import me.kimdeaung.springbootdeveloper.repository.BlogRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor // final 이 붙거나 @NotNull이 붙은 필드의 생성지 추가
 @Service                 // 빈으로 등록
 
@@ -39,5 +41,28 @@ public class BlogService {
             지시사앟ㅇ
             service 와 동일한 라인에 controller 패키지 생성 후 BlogApiController.java생성
      */
+
+    public List<Article> findAll(){
+        return blogRepository.findAll();
+    }
+    /*
+        JPA 지원 메서드인 findAll()을 호출해 article 테이블에 저장되어있는 모든 데이터를 조회,
+
+        응답을 위한 DTO 생성
+        dto 패키지에 ArticleResponse.java
+     */
+
+    // id 로 특정 글 조회
+
+    public Article findById(long id){                   // 이 경우 결과값이 하나뿐이기에 리턴 값 Article -- id는 PK 값이기에
+        return blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: "+id)); // 람다식
+    }
+
+    // 삭제 메서드 정리
+    public void delete(long id){
+        blogRepository.deleteById(id);
+    }
+    // 컨트롤러  /api/articles/{id}
 
 }

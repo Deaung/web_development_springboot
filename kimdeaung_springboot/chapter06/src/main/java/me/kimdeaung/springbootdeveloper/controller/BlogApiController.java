@@ -3,14 +3,14 @@ package me.kimdeaung.springbootdeveloper.controller;
 import lombok.RequiredArgsConstructor;
 import me.kimdeaung.springbootdeveloper.domain.Article;
 import me.kimdeaung.springbootdeveloper.dto.AddArticleRequest;
+import me.kimdeaung.springbootdeveloper.dto.ArticleResponse;
 import me.kimdeaung.springbootdeveloper.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -59,4 +59,52 @@ public class BlogApiController {
             Sql statement 입력창에
                 select * from article
      */
+
+    @GetMapping("/api/articles")
+    public ResponseEntity<List<ArticleResponse>> findAllArticles(){
+        List<ArticleResponse> articles = blogService.findAll()
+                .stream()
+                .map(ArticleResponse::new)
+                .toList();
+
+        return ResponseEntity.ok().body(articles);
+    }
+    /*
+        /api/articles Get 요청이 들어오면 글 전체를 조회하는 findAll()메서드를 호출
+        -> 다음 응답용 객체인 ArticleResponse 로 파싱해서 body 에 담아
+        클라이언트에 전송 -> 해당 코드에서는 stream 을 적용 -> 추후 설명
+
+        * stream : 여러 데이터가 모여있는 컬렉션을 간편하게 처리하기 위해 사용하는 기능
+     */
+
+    @GetMapping("/api/articles/{id}")
+    // URL 경로에서 값을 추출
+    public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id){ // URL 에서 {id} 에 해당하는 값이 id로 들어옴
+        Article article = blogService.findById(id);
+
+        return ResponseEntity.ok()
+                .body(new ArticleResponse(article));
+
+    }
+    @DeleteMapping("/api/articles/{id}")
+
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
+        blogService.delete(id);
+
+        return ResponseEntity.ok()
+                .build();
+        /*
+           @PathVariable 통해 {id} 에 해당하는 값 들어옴
+         */
+    }
+
+
+
+
+
+
+
+
+
+
 }
