@@ -5,7 +5,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
+
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +28,15 @@ public class Article {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @CreatedDate //엔티티가 생성될 때ㅣ의 생성 시간 저장
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
+
 
     @Builder    // 빌더 패턴으로 객체 생성
     public Article(String title, String content){
@@ -43,7 +58,7 @@ public class Article {
         객체를 유연하고 직관적으로 생성할 수 있기 때문에 개발자들이 애용하는 '디자인패턴'
         어느 필트에 어떤 값이 들어가는지 명시적으로 파악 할 수있다
 
-        repository package 생성(domain과 같은 라인)
+        repository package 생성(domain 과 같은 라인)
 
      */
 }
