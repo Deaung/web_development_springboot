@@ -13,6 +13,7 @@ public class UserViewController {
     public String signup(){
      return "signup";
     }
+
     /*
         get 요청으로 /login 경로로 들어오면 login() 메서드가 login.html을
         마찬가지 요청으로 signup 경로로 들어오면 signup 메서드가 signup.html 반환
