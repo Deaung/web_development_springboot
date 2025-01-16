@@ -60,11 +60,11 @@ public class TokenProvider {
     public Authentication getAuthentication(String token){
         // getClaims 아직 정의 안함
         Claims claims = getClaims(token);
-        Set<SimpleGrantedAuthority> authoritySet = Collections.singleton(
+        Set<SimpleGrantedAuthority> authorities = Collections.singleton(
                 new SimpleGrantedAuthority("ROLE_USER"));
 
         return new UsernamePasswordAuthenticationToken(
-                new org.springframework.security.core.userdetails.User(claims.getSubject(),"",authorities),
+                new org.springframework.security.core.userdetails.User(claims.getSubject(), "", authorities),
                 token, authorities);
     }
 
