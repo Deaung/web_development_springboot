@@ -29,10 +29,14 @@ public class User implements UserDetails {  // UserDetails를 상속 받아 인�
     @Column(name = "password")
     private String password;
 
+    @Column(name = "nickname",unique = true)
+    private String nickname; // 빌더에 해당 필드 추가
+
     @Builder
-    public User(String email, String password, String auth) {
+    public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
     }
 
     @Override
@@ -72,4 +76,17 @@ public class User implements UserDetails {  // UserDetails를 상속 받아 인�
     public boolean isEnabled() {
         return true;
     }
+
+    // 사용자 이름 변경
+    public User update(String nickname){
+        this.nickname = nickname;
+
+        return this;
+    }
+    /*
+        리소스 서버에서 보내주는 사용자 정보를 불러오는 메서드 구성 loadUser()
+        --users 테이블에 사용자 정보 있으면 이름 업데이트
+        --없다면 saveOrUpdate() 메서드 통해 users 테이블에 추가 예정
+        config - oauth 생성 - OAuth2UserCustomService.java
+     */
 }
